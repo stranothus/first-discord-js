@@ -8,7 +8,12 @@ module.exports = {
 		option.setName('input')
 			.setDescription('The input to echo back')
 			.setRequired(true)),
-    execute(interaction) {
+    slash(interaction) {
         interaction.reply(interaction.options.getString("input"));
-    }
+    },
+	execute(client, interaction) {
+		let guild = client.guilds.cache.get(interaction.guildId);
+		let channel = guild.channels.cache.get(interaction.channelId);
+		channel.send(interaction.content.replace(/^echo\s*/i, ""));
+	}
 };
